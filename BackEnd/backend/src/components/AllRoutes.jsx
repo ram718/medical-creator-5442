@@ -1,7 +1,7 @@
 import {Route,Routes} from "react-router-dom";
-import Home from "./AdminHome";
-import AddProducts from "./AdminAddProducts";
-import Products from "./AdminProducts";
+import Home from "../Pages/AdminHome";
+import AddProducts from "../Pages/AdminAddProducts";
+import Products from "../Pages/AdminProducts";
 
 function AllRoutes(){
     return <div>

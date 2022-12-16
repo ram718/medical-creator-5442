@@ -8,16 +8,17 @@ function Products() {
     useEffect(() => {
         fetch(`http://localhost:8080/products`).then((res) => res.json()).then((res) => setData(res))
     },[])
+    console.log(data)
 
     return <div>
         <h1>Products</h1>
         <div>
-            {data.map((e) => {
+            {/* {data.map((e) => {
                 {e.name}
                 {e.price}
                 {e.image}
                 {e.description}
-            })}
+            })} */}
         </div>
     </div>
 }
