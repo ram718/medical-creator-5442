@@ -27,11 +27,11 @@ import { ReactText } from 'react';
 
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
+  { name: 'Hot Deals', icon: FiHome },
   { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Box Meals', icon: FiCompass },
+  { name: 'Burgers', icon: FiStar },
+  { name: 'Snacks & Beverages', icon: FiSettings },
 ];
 
 export default function Sidebar({ children }) {
@@ -78,9 +78,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
