@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import {Grid, GridItem,Image,Text} from "@chakra-ui/react";
 import ProductItem from "./ProductsItem";
 import Loading from "../components/Loading";
+import SideBar from "../components/Sidebar";
 
 
 function Menu() {
@@ -18,16 +19,17 @@ function Menu() {
     },[])
     // console.log(data)
 
-    return loading ? <Loading/> : <div> 
-        {data.length !== 0? data.map((e) => 
-            <Grid templateColumns="repeat(3,1fr)" gap={4}>
-            <ProductItem
-                {...e}
-            />
-            </Grid>
-            
-            // console.log(e.price)
-        ) : null}
+    return loading ? <Loading/> : <div style={{display:"flex"}}>
+        <SideBar/> 
+        <Grid templateColumns="repeat(3,1fr)" gap={4}>
+            {data.length !== 0? data.map((e) => 
+                <GridItem>
+                    <ProductItem
+                        {...e}
+                    />
+                </GridItem>
+            ) : null}
+        </Grid>
     </div>
     
 }
