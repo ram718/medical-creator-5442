@@ -6,14 +6,50 @@ import {
     Input,
     Checkbox,
     Stack,
-    Link,
+    Center, 
     Button,
     Heading,
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
+  import {useState,useContext} from "react";
+import { Link as Link } from 'react-router-dom';
+  import {AuthContext} from "../AuthContext/AuthContext";
+  import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
+import { SiLinkedin, SiMessenger } from 'react-icons/si';
+
+function All() {
+  return (
+    <Center p={8}>
+      <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
+        {/* Facebook */}
+        <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
+          <Center>
+            <Text>Continue with Facebook</Text>
+          </Center>
+        </Button>
+
+        {/* Google */}
+        <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+          <Center>
+            <Text>Sign in with Google</Text>
+          </Center>
+        </Button>
+      </Stack>
+    </Center>
+  );
+}
+
+
   
   export default function Login() {
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const {loginUser,isAuth} = useContext(AuthContext);
+    const [loading,setLoading] = useState(false);
+    // console.log(isAuth)
+
     return (
       <Flex
         minH={'100vh'}
@@ -33,11 +69,11 @@ import {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -45,20 +81,24 @@ import {
                   align={'start'}
                   justify={'space-between'}>
                   <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
+                  <Link color={'red.400'}>Forgot password?</Link>
                 </Stack>
-                <Button
-                  bg={'blue.400'}
+                <Link to="/"><Button
+                  bg={'red.400'}
                   color={'white'}
                   _hover={{
-                    bg: 'blue.500',
-                  }}>
+                    bg: 'red.500',
+                  }} onClick={loginUser}>
                   Sign in
-                </Button>
+                </Button></Link>
               </Stack>
             </Stack>
+            <All/>
           </Box>
         </Stack>
       </Flex>
+
+      
+      
     );
   }

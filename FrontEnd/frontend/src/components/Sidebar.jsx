@@ -12,7 +12,9 @@ import {
   Text,
   useDisclosure,
   BoxProps,
-  FlexProps,
+  Button,
+  Image,
+  Heading
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -21,27 +23,35 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
+  
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
-import { ReactText } from 'react';
+import { useState,useEffect } from 'react';
+import CartItem from '../Pages/CartItem';
+import ProductItem from '../Pages/ProductsItem';
+import Menu from '../Pages/Menu';
 
 
 const LinkItems = [
-  { name: 'Hot Deals', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Box Meals', icon: FiCompass },
-  { name: 'Burgers', icon: FiStar },
-  { name: 'Snacks & Beverages', icon: FiSettings },
+  { name: 'Hot Deals'},
+  { name: 'Trending'},
+  { name: 'Box Meals'},
+  { name: 'Burgers'},
+  { name: 'Snacks & Beverages'},
 ];
 
-export default function Sidebar({ children }) {
+
+export default function Sidebar({ children,data}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
+
       />
+      
       <Drawer
         autoFocus={false}
         isOpen={isOpen}
@@ -68,6 +78,27 @@ export default function Sidebar({ children }) {
 // }
 
 const SidebarContent = ({ onClose, ...rest }) => {
+
+  const [searchTerm,setSearchTerm] = useState("");
+  const [searchData,setSearchData] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/products?q=${searchTerm}`).then((res) => res.json()).then((res) => setSearchData(res))
+  },[searchTerm])
+
+  console.log(searchData)
+
+  const handleSearch = (val) => {
+    setSearchTerm(val);
+    {searchData.map((e) => (
+      
+        <CartItem {...e}/>
+      // <Menu searchData={searchData}/>
+
+      ))}
+  }
+  
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -81,11 +112,21 @@ const SidebarContent = ({ onClose, ...rest }) => {
         
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+      <Image style={{marginLeft:"30%",marginTop:"-25%"}} src="https://images.ctfassets.net/wtodlh47qxpt/E2WVSq4FOeSCRAGy6LZZa/11c68fb3611baabb79e0ae892338098d/3_Strips.png" alt="image" ></Image>
+      <br />
+      <Heading size="lg">IFC Menu</Heading>
+      <br />
+      {/* {LinkItems.map((link) => (
+        <NavItem key={link.name} onClick={() => setSearchTerm(link.name)}>
           {link.name}
         </NavItem>
-      ))}
+      ))} */}
+
+      <NavItem onClick={() => handleSearch("spicy")}>Hot Deals</NavItem>
+      <NavItem onClick={() => handleSearch("")}>Trending</NavItem>
+      <NavItem onClick={() => handleSearch("biryani")}>Box Meals</NavItem>
+      <NavItem onClick={() => handleSearch("burger")}>Burgers</NavItem>
+      <NavItem onClick={() => handleSearch("snack")}>Snacks</NavItem>
     </Box>
   );
 };
@@ -105,7 +146,7 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'cyan.400',
+          bg: 'red.400',
           color: 'white',
         }}
         {...rest}>

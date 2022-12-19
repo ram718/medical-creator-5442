@@ -8,6 +8,8 @@ import SideBar from "../components/Sidebar";
 function Menu() {
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(false);
+    const [searchTerm,setSearchTerm] = useState("");
+    const [searchData,setSearchData] = useState([]);
 
     useEffect(() => {
         setLoading(true)
@@ -19,11 +21,18 @@ function Menu() {
     },[])
     // console.log(data)
 
+    useEffect(() => {
+        fetch(`http://localhost:8080/products?q=${searchTerm}`).then((res) => res.json()).then((res) => setSearchData(res))
+      },[searchTerm])
+
+
     return loading ? <Loading/> : <div style={{display:"flex"}}>
-        <SideBar/> 
-        <Grid templateColumns="repeat(3,1fr)" gap={4}>
+        <SideBar
+        data={data}
+        /> 
+        <Grid templateColumns="repeat(3,1fr)" gap={6}>
             {data.length !== 0? data.map((e) => 
-                <GridItem>
+                <GridItem key={e.name}>
                     <ProductItem
                         {...e}
                     />
