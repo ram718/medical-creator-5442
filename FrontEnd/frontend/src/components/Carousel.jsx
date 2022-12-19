@@ -4,6 +4,7 @@ import { Box, IconButton, useBreakpointValue } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 // And react-slick as our Carousel Lib
 import Slider from 'react-slick';
+import Loading from './Loading';
 
 // Settings for the slider
 const settings = {
@@ -12,16 +13,17 @@ const settings = {
   fade: true,
   infinite: true,
   autoplay: true,
-  speed: 500,
-  autoplaySpeed: 5000,
+  speed: 1000,
+  autoplaySpeed: 3000,
   slidesToShow: 1,
   slidesToScroll: 1,
 };
 
 export default function Carousel() {
+  const [loading,setLoading] = React.useState(false);
   // As we have used custom buttons, we need a reference variable to
   // change the state
-  const [slider, setSlider] = React.useState<Slider | null>(null);
+  const [slider, setSlider] = React.useState(null);
 
   // These are the breakpoints which changes the position of the
   // buttons as the screen size changes
@@ -30,15 +32,17 @@ export default function Carousel() {
 
   // These are the images used in the slide
   const cards = [
-    'https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    'https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    'https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+    "https://images.ctfassets.net/wtodlh47qxpt/4gztBB8yAvtp6jV7JAuLD/093fddbb77a78a44a4d3d5e066c592de/KFC_Peri_Peri_Banner__1440x396px.jpg?w=1440&fit=fill&fm=webp",
+    "https://images.ctfassets.net/wtodlh47qxpt/2cKs5e17FbKIE7Dza5ZlNM/e7163ee02d91d59d81a20ecf606f707b/Biryani_Banner_1440x396px.jpg?w=1440&fit=fill&fm=webp",
+    "https://images.ctfassets.net/wtodlh47qxpt/7p3qmgJkZyxS0SrYR3ApGT/5a28aaf50d424fa816f6d058d9086904/KFC_Celebration_Bucket_Banner__1440x396px.jpg?w=1440&fit=fill&fm=webp",
+    "https://images.ctfassets.net/wtodlh47qxpt/4w2NU51eNqAlF0S4k3YLTB/0d9dd4031fc40bd266a2b4ac49834491/1440_x_396_Value_Burger.jpg?w=1440&fit=fill&fm=webp",
+    "https://images.ctfassets.net/wtodlh47qxpt/4MiZL0wr9Z4ZOTjldWEshT/5ed50dce636025cd535b9344ae820d46/DIP_N_CRUNCH_BANNER_1440x396px.jpg?w=1440&fit=fill&fm=webp"
   ];
 
   return (
     <Box
       position={'relative'}
-      height={'600px'}
+      height={'400px'}
       width={'full'}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
@@ -56,7 +60,7 @@ export default function Carousel() {
       {/* Left Icon */}
       <IconButton
         aria-label="left-arrow"
-        colorScheme="messenger"
+        colorScheme="red"
         borderRadius="full"
         position="absolute"
         left={side}
@@ -69,7 +73,7 @@ export default function Carousel() {
       {/* Right Icon */}
       <IconButton
         aria-label="right-arrow"
-        colorScheme="messenger"
+        colorScheme="red"
         borderRadius="full"
         position="absolute"
         right={side}
@@ -86,9 +90,9 @@ export default function Carousel() {
             key={index}
             height={'6xl'}
             position="relative"
-            backgroundPosition="center"
+            backgroundPosition="top"
             backgroundRepeat="no-repeat"
-            backgroundSize="cover"
+            backgroundSize="auto"
             backgroundImage={`url(${url})`}
           />
         ))}

@@ -1,7 +1,19 @@
 import { Card, Heading, CardBody, CardFooter,Text,Stack,Divider,Button,ButtonGroup,Image,SimpleGrid } from '@chakra-ui/react'
 import React from "react"
 
-function ProductItem({image,name,description,price}) {
+export default function ProductItem({image,name,description,price}) {
+  let send_data = {name,image,description,price};
+
+  function handleCart(){
+    let data = JSON.parse(localStorage.getItem("kfc")) || [];
+
+    data.push(send_data)
+
+    localStorage.setItem("kfc",JSON.stringify(data));
+
+  }
+
+
     return  <div>
     
     <Card maxW='md'>
@@ -24,7 +36,7 @@ function ProductItem({image,name,description,price}) {
     <Divider />
     <CardFooter alignContent="center" justifyContent="space-evenly">
       <ButtonGroup spacing='2' backgroundColor='red' borderRadius="2rem">
-        <Button variant='ghost' colorScheme='white' >
+        <Button variant='ghost' colorScheme='white' onClick={handleCart}>
           Add to cart <Image src="https://online.kfc.co.in/static/media/Icon_Add_to_Cart.58b87a9b.svg" alt="image" />
         </Button>
       </ButtonGroup>
@@ -32,4 +44,3 @@ function ProductItem({image,name,description,price}) {
   </Card>
   </div>
 }
-export default ProductItem;
