@@ -28,7 +28,7 @@ function Menu() {
 
     return loading ? <Loading/> : <div style={{display:"flex"}}>
         <SideBar
-        data={searchData || data}
+        data={data}
         /> 
         <Grid templateColumns="repeat(3,1fr)" gap={6}>
             {data.length !== 0? data.map((e) => 
